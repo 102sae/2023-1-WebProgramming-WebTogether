@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import * as cheerio from "cheerio";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 let array = new Array();
 const SearchNews = () => {
+
 
     
     const location = useLocation();
@@ -32,9 +33,11 @@ const SearchNews = () => {
                 }
             );
             setResponse(res.data.items);
+
         }
         getData();
     }, []);
+
 
    
 
@@ -73,6 +76,7 @@ const SearchNews = () => {
            
             
         
+
         });
     }, [response]);
 
