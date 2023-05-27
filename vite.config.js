@@ -9,30 +9,28 @@ export default defineConfig({
   server:{
     proxy:{
       '/v1/search/news.json':'https://openapi.naver.com',
-      '/news/articleView.html': {
-        target: 'https://www.straightnews.co.kr',
+      
+      '/mnews/article': 'https://n.news.naver.com',
+      
+      
+      '/news':'http://www.dailyimpact.co.kr',
+      '/read': {
+        target: 'https://entertain.naver.com',
         changeOrigin: true,
-      },
-      '/view.php': {
-        target: 'http://www.lawissue.co.kr',
-        changeOrigin: true,
-      },
-      '/news': {
-        target: 'https://www.insight.co.kr',
-        changeOrigin: true,
-      },
-      '/news/view.php': {
-        target: 'https://medicalworldnews.co.kr',
-        changeOrigin: true,
-      },
-      '/mnews/article': {
-        target: 'https://n.news.naver.com',
-        changeOrigin: true,
-      },
-      '/news/view': {
-        target: 'http://www.mediapen.com',
-        changeOrigin: true,
-      },
+        rewrite: (path) => {
+          const match = path.match(/\/read\?(.*)/)
+          if (match) {
+            return `/read?${match[1]}`
+          }
+          return path
+        },
+        secure:false,
+        ws:true
+      }
+      
+      
+        
+     
     }
     
   }
