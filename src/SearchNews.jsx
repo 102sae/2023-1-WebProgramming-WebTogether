@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import iconv from 'iconv-lite';
+
 import * as cheerio from "cheerio";
 import { useLocation } from 'react-router-dom';
 
@@ -43,8 +43,8 @@ const SearchNews = () => {
 
 
         response.forEach((dataa) => {
-           
-            if ((dataa.link.includes('https://n.news.naver.com')  || dataa.link.includes('http://www.dailyimpact.co.kr') )) {
+            //console.log(dataa.link);
+            if ((dataa.link.includes('https://n.news.naver.com')  || dataa.link.includes('http://www.dailyimpact.co.kr') || dataa.link.includes('https://www.ktv.go.kr') || dataa.link.includes('https://www.wikitree.co.kr'))) {
                 
                 const extracted = dataa.link.split('/').slice(3).join('/');
                 const geturl = '/' + extracted;
@@ -57,7 +57,8 @@ const SearchNews = () => {
                     const pTag = $('p').text();
                     const dic_area=$('div#dic_area').text();
                     const articeBody=$('div#articeBody').text();
-                    const articles=[pTag,dic_area,articeBody]
+                    const zoominout=$('div.article zoominout').text();
+                    const articles=[pTag,dic_area,articeBody,zoominout]
                     articles.forEach((article)=>{
                         if (article){
                             array.push(article);
@@ -66,12 +67,12 @@ const SearchNews = () => {
                     })
                     
 
-                    
+                    setContent(array);
                 }).catch((error)=>console.log(error));
             }
            
             
-        setContent(array);
+        
         });
     }, [response]);
 
@@ -82,7 +83,7 @@ const SearchNews = () => {
     return (
         <div>
             {content.map((item, index) => (
-                <p key={item} style={{ border: '1px solid black' }}>{item}</p>
+                <p key={index} style={{ border: '1px solid black' }}>{item}</p>
             ))}
         </div>
     );

@@ -10,11 +10,15 @@ export default defineConfig({
     proxy:{
       '/v1/search/news.json':'https://openapi.naver.com',
       
-      '/mnews/article': 'https://n.news.naver.com',
+      '/mnews/article': {
+        target: 'https://n.news.naver.com',
+        changeOrigin: true,
+        secure: false
+      },
       
       
       '/news':'http://www.dailyimpact.co.kr',
-      '/read': {
+      /*'/read': {
         target: 'https://entertain.naver.com',
         changeOrigin: true,
         rewrite: (path) => {
@@ -26,7 +30,10 @@ export default defineConfig({
         },
         secure:false,
         ws:true
-      }
+      }*/
+      '/read': 'https://entertain.naver.com',
+      '/view':'https://www.ktv.go.kr',
+      '/articles':'https://www.wikitree.co.kr'
       
       
         
