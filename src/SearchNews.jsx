@@ -1,93 +1,92 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import iconv from 'iconv-lite';
 import * as cheerio from "cheerio";
 import { useLocation } from 'react-router-dom';
 
 let array = new Array();
 const SearchNews = () => {
 
-  const [title, setTitle] = useState([]);
-  const location = useLocation();
-  const searchTerm = location.state.result;
-  const [data, setData] = useState([]);
-  const [response, setResponse] = useState([]);
-  const [content,setContent]=useState([]);
-
-  useEffect(() => {
-    console.log(searchTerm);
-    async function getData() {
-      const id = '94fGFH09Kp151eWNW9h8';
-      const secret_id = 'YvsfmSVRlf';
-
-      const res = await axios.get(
-        "/v1/search/news.json", // 불러올 api 주소
-        {
-          params: { query: searchTerm, display: 5, sort: "date" }, // query는 필수값
-          // dispplay : 몇 개 기사를 나열할건지
-          headers: {
-            "X-Naver-Client-Id": id,
-            "X-Naver-Client-Secret": secret_id,
-          },
-        }
-      );
-      setResponse(res.data.items);
-    }
-    getData();
-  }, []);
-
-  const getHtml = async (item_link) => {
-    try {
-      const response = await axios.get(item_link);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-
-  useEffect(() => {
+    
+    const location = useLocation();
+    const searchTerm = location.state.result;
+    
+    const [response, setResponse] = useState([]);
+    const [content, setContent] = useState([]);
    
-    console.log(response);
-    response.forEach((dataa) => {
-      getHtml(dataa.originallink)
-        .then((htmlData) => {
-          let result = '';
-          const $ = cheerio.load(htmlData.toString()); // html 데이터 파싱
-          const $contents = $('div#contents');
-          const $content = $('div#content');
-          const $pTagList = $('p');
-          const $article = $('article');
-          const data = [$pTagList, $article, $contents, $content];
+    useEffect(() => {
+        console.log(searchTerm);
+        async function getData() {
+            const id = '94fGFH09Kp151eWNW9h8';
+            const secret_id = 'YvsfmSVRlf';
 
-          dataa.forEach((item) => {
-            if (item.length !== 0) { // 요소가 존재하면
-              console.log(item.length);
+            const res = await axios.get(
+                "/v1/search/news.json", // 불러올 api 주소
+                {
+                    params: { query: searchTerm, display: 100, sort: "date" }, // query는 필수값
+                    // dispplay : 몇 개 기사를 나열할건지
+                    headers: {
+                        "X-Naver-Client-Id": id,
+                        "X-Naver-Client-Secret": secret_id,
+                    },
+                }
+            );
+            setResponse(res.data.items);
+        }
+        getData();
+    }, []);
 
-              item.each(function (i, elem) { // 텍스트 추출
-                result = result + $(this).text();
-              });
-            } else {
-              console.log('data 없음');
+   
+
+  
+    useEffect(() => {
+
+
+        response.forEach((dataa) => {
+            //console.log(dataa.link)
+           
+            if ((dataa.link.includes('https://n.news.naver.com')  || dataa.link.includes('http://www.dailyimpact.co.kr') )) {
+                
+                const extracted = dataa.link.split('/').slice(3).join('/');
+                const geturl = '/' + extracted;
+                //console.log(geturl)
+                axios.get(geturl).then((response) => {
+                    const html = response.data;
+                    const $ = cheerio.load(html);
+
+                    
+                    const pTag = $('p').text();
+                    const dic_area=$('div#dic_area').text();
+                    const articeBody=$('div#articeBody').text();
+                    const articles=[pTag,dic_area,articeBody]
+                    articles.forEach((article)=>{
+                        if (article){
+                            array.push(article);
+                            
+                        }
+                    })
+                    
+
+                    
+                }).catch((error)=>console.log(error));
             }
-          });
-          array.push(result);
-          setContent(array);
-          
-        })
-        .then((res) => {
-          console.log(dataa.link);
-          console.log(res + '\n');
+           
+            
+        setContent(array);
         });
-    });
-  }, [response]);
+    }, [response]);
 
-  return (
-    <div>
-      {content.map((item) => (
-        <p key={item}>{item}</p>
-      ))}
-    </div>
-  );
+    useEffect(()=>{
+        console.log('내용물',content.length);
+        
+    },[content])
+    return (
+        <div>
+            {content.map((item) => (
+                <p key={item}>{item}</p>
+            ))}
+        </div>
+    );
 };
 
 export default SearchNews;
