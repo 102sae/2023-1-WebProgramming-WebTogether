@@ -43,13 +43,12 @@ const SearchNews = () => {
 
 
         response.forEach((dataa) => {
-            //console.log(dataa.link)
            
             if ((dataa.link.includes('https://n.news.naver.com')  || dataa.link.includes('http://www.dailyimpact.co.kr') )) {
                 
                 const extracted = dataa.link.split('/').slice(3).join('/');
                 const geturl = '/' + extracted;
-                //console.log(geturl)
+                
                 axios.get(geturl).then((response) => {
                     const html = response.data;
                     const $ = cheerio.load(html);
@@ -82,8 +81,8 @@ const SearchNews = () => {
     },[content])
     return (
         <div>
-            {content.map((item) => (
-                <p key={item}>{item}</p>
+            {content.map((item, index) => (
+                <p key={item} style={{ border: '1px solid black' }}>{item}</p>
             ))}
         </div>
     );
