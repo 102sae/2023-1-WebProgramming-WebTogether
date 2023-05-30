@@ -7,6 +7,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { createGlobalStyle } from 'styled-components';
 import LandingMain from "./landing/LandingMain.jsx";
 import LandingProject from "./landing/LandingProject.jsx";
+import ProjectMain from "./project/ProjectMain.jsx";
+import Searching from "./project/Searching.jsx";
+import Mypage from "./project/Mypage.jsx";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -36,6 +39,18 @@ const router = createBrowserRouter([
     path: "/project",
     element: <LandingProject />
   },
+  {
+    path: "/main",
+    element: <ProjectMain />
+  },
+  {
+    path:"/search",
+    element: <Searching />
+  },
+  {
+    path:"/mypage",
+    element: <Mypage />
+  }
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

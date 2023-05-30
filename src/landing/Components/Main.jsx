@@ -12,8 +12,8 @@ const Middle = styled.div`
 function Main() {
   return (
     <Middle>
-      <Masthead/>
-      <TeamSection/>
+      <Masthead />
+      <TeamSection />
     </Middle>
   );
 }
