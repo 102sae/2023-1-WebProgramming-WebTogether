@@ -58,7 +58,7 @@ function Navbar() {
             </NavItem>
           </li>
           <li>
-            <NavItem href="main.html" className="nav-item2">
+            <NavItem href="/main" className="nav-item2">
               SITE
             </NavItem>
           </li>
