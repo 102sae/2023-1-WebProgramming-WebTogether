@@ -43,7 +43,7 @@ width:10%;
 
 function Article(props) {
     return (
-        <ArticleStyle>
+        <ArticleStyle onClick={props.onClick}>
             <Title>{props.title}</Title>
             <Press>{props.press}</Press>
             <Date>{props.date}</Date>
