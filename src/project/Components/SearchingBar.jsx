@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 const SearchingContainer = styled.div`
 margin-left:210px;
-margin-top:14px;
+margin-top:-70px;
+position:fixed;
 `;
 
 const Bar = styled.input`
@@ -21,8 +22,8 @@ margin-left: 10px;
 const SearchingIcon = styled.img`
 position: absolute;
 width: 25px;
-left: 790px;
-top: 28px;
+left: 580px;
+top: 16px;
 `;
 
 const SearchingBar = () => {

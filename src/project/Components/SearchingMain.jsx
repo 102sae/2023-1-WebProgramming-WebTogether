@@ -8,6 +8,7 @@ width:72%;
 `;
 
 const ArticleCnt = styled.p`
+margin-top:85px;
 color: #FFFFFF80;
   text-align: right;
 `;
