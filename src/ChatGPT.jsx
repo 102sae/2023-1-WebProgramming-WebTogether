@@ -9,19 +9,20 @@ const Chat = () => {
 
   const onSubmit = () => {
     var input = inputValue;
-    let questionSummary = input + "이 뉴스 영어 말고 꼭 한국어로 요약해줘.";
-    chat(questionSummary).then((answer) => console.log(`키워드: ${answer}`));
+    let questionSummary =
+      "[text from: " + input + "] 이 뉴스를 영어 말고 한국어로 요약해줘.";
+    chat(questionSummary).then((answer) => console.log(`본문: ${answer}`));
     let questionKeyword =
       input +
       "이 뉴스의 카테고리를 정했을 때 정치, 경제, 사회, 생활/문화, 세계, 기술/IT, 연예, 스포츠 중에서 가장 유사한거 하나 선택 후 키워드를 추출해줘. 요약 하지 말고 예시처럼 키워드만 무조건 간단하게 3개 이내로 괄호에 넣어서 추출해줘. 예시) (연예),(스캔들)";
-    chat(questionKeyword).then((answer) => console.log(`본문: ${answer}`));
+    chat(questionKeyword).then((answer) => console.log(`키워드: ${answer}`));
   };
 
   async function chat(question) {
     return await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer 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`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const MainContainer = styled.div`
   width: 100%;
@@ -47,20 +47,14 @@ function Main() {
       <LogoName>WEB-TOGETHER</LogoName>
       <form id="search-form" action="/search" method="GET">
         <SearchingContainer>
-          <SearchingBar
-            name="q"
-            type="text"
-            placeholder="뉴스 키워드 검색"
-          />
+          <SearchingBar name="q" type="text" placeholder="뉴스 키워드 검색" />
           <a href="/search">
-            <SearchingIcon
-              src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-            />
+            <SearchingIcon src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" />
           </a>
         </SearchingContainer>
       </form>
     </MainContainer>
   );
-};
+}
 
 export default Main;

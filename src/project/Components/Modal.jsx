@@ -68,18 +68,18 @@ const ModalContentInfo = styled.div`
 `;
 
 const ModalContentBody = styled.div`
-width: 100%;
-height: 40%;
-background-color: #D2D2D280;
-display: flex;
-justify-content: center;
-align-items: center;
-margin-bottom: 10px;
-border-radius: 10px;
+  width: 100%;
+  height: 40%;
+  background-color: #d2d2d280;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
 `;
 
 const KeywordGroup = styled.div`
-width: 100%;
+  width: 100%;
   height: 9%;
   /* background-color: #D2D2D2; */
   display: flex;
@@ -88,47 +88,45 @@ width: 100%;
 `;
 
 const Keyword = styled.div`
-width: 10%;
+  width: 10%;
   height: 45px;
-  background-color: #D2D2D2;
+  background-color: #d2d2d2;
   border-radius: 20px;
   margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-`
-
-
+`;
 
 function Modal({ isOpen, closeModal }) {
-    return (
-        <ModalOverlay style={{ display: isOpen ? "block" : "none" }}>
-            <ModalWindow>
-                <CloseButton onClick={closeModal}>X</CloseButton>
-                <ModalTitle>뉴스기사 제목</ModalTitle>
-                <ModalMain>
-                    <ModalContentSummary>
-                    <p>요약문</p>
-                    </ModalContentSummary>
-                    <ModalContentInfo>
-                        <p>언론사 : </p>
-                        <p>작성날짜 : </p>
-                        <p>기자 : </p>
-                        <p>링크 : </p>
-                    </ModalContentInfo>
-                </ModalMain>
-                <ModalContentBody>
-                    <p>기사본문</p>
-                </ModalContentBody>
+  return (
+    <ModalOverlay style={{ display: isOpen ? "block" : "none" }}>
+      <ModalWindow>
+        <CloseButton onClick={closeModal}>X</CloseButton>
+        <ModalTitle>뉴스기사 제목</ModalTitle>
+        <ModalMain>
+          <ModalContentSummary>
+            <p>요약문</p>
+          </ModalContentSummary>
+          <ModalContentInfo>
+            <p>언론사 : </p>
+            <p>작성날짜 : </p>
+            <p>기자 : </p>
+            <p>링크 : </p>
+          </ModalContentInfo>
+        </ModalMain>
+        <ModalContentBody>
+          <p>기사본문</p>
+        </ModalContentBody>
 
-                <KeywordGroup>
-                    <Keyword>키워드1</Keyword>
-                    <Keyword>키워드2</Keyword>
-                    <Keyword>키워드3</Keyword>
-                </KeywordGroup>
-            </ModalWindow>
-        </ModalOverlay>
-    );
+        <KeywordGroup>
+          <Keyword>키워드1</Keyword>
+          <Keyword>키워드2</Keyword>
+          <Keyword>키워드3</Keyword>
+        </KeywordGroup>
+      </ModalWindow>
+    </ModalOverlay>
+  );
 }
 
 export default Modal;

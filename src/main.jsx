@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import SearchNews from "./SearchNews.jsx";
 import FilterSearch from "./FilterSearch.jsx";
-import Chat from "./ChatGPT.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 import LandingMain from "./landing/LandingMain.jsx";
 import LandingProject from "./landing/LandingProject.jsx";
 import ProjectMain from "./project/ProjectMain.jsx";
 import Searching from "./project/Searching.jsx";
 import Mypage from "./project/Mypage.jsx";
+import NotFound from "./project/Components/NotFound.jsx";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -28,33 +28,30 @@ const router = createBrowserRouter([
     element: <SearchNews />,
   },
   {
-    path: "/ask",
-    element: <Chat />,
-  },
-  {
     path: "/",
-    element: <LandingMain />
+    element: <LandingMain />,
+    errorElement: <NotFound />,
   },
   {
     path: "/project",
-    element: <LandingProject />
+    element: <LandingProject />,
   },
   {
     path: "/main",
-    element: <ProjectMain />
+    element: <ProjectMain />,
   },
   {
-    path:"/search",
-    element: <Searching />
+    path: "/search",
+    element: <Searching />,
   },
   {
-    path:"/mypage",
-    element: <Mypage />
-  }
+    path: "/mypage",
+    element: <Mypage />,
+  },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GlobalStyle/>
+    <GlobalStyle />
     <RouterProvider router={router} />
   </React.StrictMode>
 );

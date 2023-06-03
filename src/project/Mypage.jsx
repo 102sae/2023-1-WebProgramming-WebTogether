@@ -7,7 +7,7 @@ function Mypage() {
   return (
     <>
       <Navbar />
-        <MypageMain/>
+      <MypageMain />
       <Footer />
     </>
   );
