@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 import Masthead from "./Masthead";
 import TeamSection from "./Teamsection";
@@ -9,13 +9,11 @@ const Middle = styled.div`
   height: fit-content;
 `;
 
-function Main() {
-  return (
-    <Middle>
-      <Masthead />
-      <TeamSection />
-    </Middle>
-  );
-}
+const Main = forwardRef((props, ref) => (
+  <Middle>
+    <Masthead />
+    <TeamSection ref={ref} />
+  </Middle>
+));
 
 export default Main;
