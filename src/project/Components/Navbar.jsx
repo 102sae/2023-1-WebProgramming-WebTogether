@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logoImg from "../../assets/logo.jpg";
+import logoImg from '../../assets/logo.jpg';
 
 const NavHeader = styled.div`
   width: 100%;
@@ -21,28 +21,44 @@ const LogoLink = styled.img`
   text-decoration: none;
 `;
 
-const NavUser = styled.a`
+const NavbarWrapper = styled.div`
+  width: 800px;
   margin-left: auto;
   margin-right: 100px;
-  width: 100px;
-  height: 50px;
-
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
+  justify-content: end;
+`;
 
+const NavList = styled.ul`
+  display: flex;
+  list-style: none;
+`;
+
+const NavItem = styled.a`
   font-size: 20px;
   color: #ffffff80;
+  margin-left: 60px;
+  text-decoration: none;
 `;
 
 function Navbar() {
   return (
     <NavHeader>
-      <a href="/main">
-        <LogoLink src={logoImg} alt="WEB-TOGETHER" />
-      </a>
-      <NavUser href="/mypage">MYPAGE</NavUser>
+      <a href="/" ><LogoLink src={ logoImg } alt="WEB-TOGETHER"/></a>
+      <NavbarWrapper>
+        <NavList>
+          <li>
+            <NavItem href="/main" className="nav-item2">
+              HOME
+            </NavItem>
+          </li>
+          <li>
+            <NavItem href="/mypage" className="nav-item2">
+              MYPAGE
+            </NavItem>
+          </li>
+        </NavList>
+      </NavbarWrapper>
     </NavHeader>
   );
 }

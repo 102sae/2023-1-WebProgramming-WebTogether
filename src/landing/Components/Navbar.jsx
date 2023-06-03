@@ -41,24 +41,34 @@ const NavItem = styled.a`
   text-decoration: none;
 `;
 
-function Navbar() {
+const NavTeam = styled.div`
+font-size: 20px;
+  color: #ffffff80;
+  margin-left: 60px;
+  text-decoration: none;
+
+  &:hover{
+    cursor:pointer;
+  }
+`;
+function Navbar(props) {
   return (
     <NavHeader>
-      <a href="/" ><LogoLink src={ logoImg } alt="WEB-TOGETHER"/></a>
+      <a href="/" ><LogoLink src={logoImg} alt="WEB-TOGETHER" /></a>
       <NavbarWrapper>
         <NavList>
           <li>
-            <NavItem href="#" className="nav-item">
+            <NavTeam onClick={props.Member}>
               MEMBERS
-            </NavItem>
+            </NavTeam>
           </li>
           <li>
-            <NavItem href="/project" className="nav-item2">
+            <NavItem href="/project">
               PROJECT
             </NavItem>
           </li>
           <li>
-            <NavItem href="/main" className="nav-item2">
+            <NavItem href="/main">
               SITE
             </NavItem>
           </li>
