@@ -4,10 +4,23 @@ import SearchNews from "./SearchNews.jsx";
 import FilterSearch from "./FilterSearch.jsx";
 import Chat from "./ChatGPT.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createGlobalStyle } from 'styled-components';
+import LandingMain from "./landing/LandingMain.jsx";
+import LandingProject from "./landing/LandingProject.jsx";
+import ProjectMain from "./project/ProjectMain.jsx";
+import Searching from "./project/Searching.jsx";
+import Mypage from "./project/Mypage.jsx";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    background-color: #1e1e1e;
+  }
+`;
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/home",
     element: <FilterSearch />,
   },
   {
@@ -18,9 +31,30 @@ const router = createBrowserRouter([
     path: "/ask",
     element: <Chat />,
   },
+  {
+    path: "/",
+    element: <LandingMain />
+  },
+  {
+    path: "/project",
+    element: <LandingProject />
+  },
+  {
+    path: "/main",
+    element: <ProjectMain />
+  },
+  {
+    path:"/search",
+    element: <Searching />
+  },
+  {
+    path:"/mypage",
+    element: <Mypage />
+  }
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <GlobalStyle/>
     <RouterProvider router={router} />
   </React.StrictMode>
 );
