@@ -25,7 +25,7 @@ const SearchNews = () => {
                 "/v1/search/news.json", // 불러올 api 주소
                 {
                     params: { query: searchTerm, display: 100, sort: "date" }, // query는 필수값
-                    // dispplay : 몇 개 기사를 나열할건지
+                    // display : 몇 개 기사를 나열할건지
                     headers: {
                         "X-Naver-Client-Id": id,
                         "X-Naver-Client-Secret": secret_id,
@@ -43,8 +43,6 @@ const SearchNews = () => {
 
   
     useEffect(() => {
-
-
         response.forEach((dataa) => {
             //console.log(dataa.link);
             if ((dataa.link.includes('https://n.news.naver.com')  || dataa.link.includes('http://www.dailyimpact.co.kr') || dataa.link.includes('https://www.ktv.go.kr') || dataa.link.includes('https://www.wikitree.co.kr'))) {
@@ -73,9 +71,6 @@ const SearchNews = () => {
                     setContent(array);
                 }).catch((error)=>console.log(error));
             }
-           
-            
-        
 
         });
     }, [response]);
