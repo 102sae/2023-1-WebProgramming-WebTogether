@@ -14,7 +14,7 @@ const FilterSearch = () => {
   const navigate = useNavigate();
 
   const move = () => {
-    navigate(`/result/${wordEntered}`, {
+    navigate(`/result`, {
       state: {
         result: wordEntered,
       },
