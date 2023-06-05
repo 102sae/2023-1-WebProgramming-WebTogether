@@ -14,7 +14,7 @@ const FilterSearch = () => {
   const navigate = useNavigate();
 
   const move = () => {
-    navigate(`/result/${wordEntered}`, {
+    navigate(`/result`, {
       state: {
         result: wordEntered,
       },
@@ -22,10 +22,11 @@ const FilterSearch = () => {
   };
 
   // useEffect -> 처음 렌더링 후에 localStorage에 있는거 getItem 할 수 있도록
+
   useEffect(() => {
     const savedData = localStorage.getItem("searchList");
     if (savedData) {
-      setData(JSON.parse(savedData).result); //
+      setData(JSON.parse(savedData).result); 
     }
   }, []);
 
@@ -54,9 +55,10 @@ const FilterSearch = () => {
     e.preventDefault();
     setSubmitted(true);
   };
+
   useEffect(() => {
     if (submitted) {
-      //console.log(wordEntered);
+      
       const isWordEnteredExists = data.includes(wordEntered);
 
       if (!isWordEnteredExists) {
