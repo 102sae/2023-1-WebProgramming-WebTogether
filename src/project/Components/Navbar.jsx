@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import logoImg from '../../assets/logo.jpg';
+import logoImg from "../../assets/logo.jpg";
 
 const NavHeader = styled.div`
   width: 100%;
@@ -44,7 +43,9 @@ const NavItem = styled.a`
 function Navbar() {
   return (
     <NavHeader>
-      <a href="/" ><LogoLink src={ logoImg } alt="WEB-TOGETHER"/></a>
+      <a href="/">
+        <LogoLink src={logoImg} alt="WEB-TOGETHER" />
+      </a>
       <NavbarWrapper>
         <NavList>
           <li>

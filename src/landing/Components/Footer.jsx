@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const FooterStyle = styled.div`
@@ -10,9 +9,9 @@ const FooterStyle = styled.div`
 
 function Footer() {
   return (
-  <FooterStyle>
-    <p>footer부분</p>
-  </FooterStyle>
+    <FooterStyle>
+      <p>footer부분</p>
+    </FooterStyle>
   );
 }
 

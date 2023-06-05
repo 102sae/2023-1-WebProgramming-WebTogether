@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const MemberStyle = styled.div`
@@ -98,7 +97,7 @@ function Member(props) {
           </MemberName>
           <NameUnderLine />
           <Major>
-          {props.major}
+            {props.major}
             <span style={{ fontStyle: "italic" }}> {props.num}</span>
           </Major>
           <Github href={props.github} target="_blank">

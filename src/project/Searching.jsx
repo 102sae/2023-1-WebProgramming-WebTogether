@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "./Components/Navbar";
 import SearchingBar from "./Components/SearchingBar";
 import SearchingMain from "./Components/SearchingMain";
@@ -8,8 +7,8 @@ function ProjectMain() {
   return (
     <>
       <Navbar />
-        <SearchingBar />
-        <SearchingMain />
+      <SearchingBar />
+      <SearchingMain />
       <Footer />
     </>
   );

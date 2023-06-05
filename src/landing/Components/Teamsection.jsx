@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import styled from "styled-components";
 import Member from "./Member";
-import Taeyeon from '../../assets/김태연.jpg';
+import Taeyeon from "../../assets/김태연.jpg";
 
 const Team = styled.section`
   height: 750px;
@@ -44,9 +44,9 @@ const TeamSection = forwardRef((props, ref) => (
       major="정보통신공학과"
       num="2020112095"
       github="https://github.com/102sae"
-      keyword1="키워드1"
-      keyword2="키워드2"
-      keyword3="키워드3"
+      keyword1="ISTJ"
+      keyword2="고양이"
+      keyword3="야구"
       img="https://avatars.githubusercontent.com/u/95170874?v=4"
     />
   </Team>
