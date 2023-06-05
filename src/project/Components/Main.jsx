@@ -177,7 +177,7 @@ const LogoName = styled.h1`
 `;
 
 const SearchingContainer = styled.div`
-  
+  position:relative;
   display: flex;
   justify-content: center;
   margin-top:20px;
@@ -192,18 +192,20 @@ const SearchingBar = styled.input`
   padding-left: 10px;
   font-size: 25px;
   font-weight: bolder;
-  position: relative;
+  
 `;
 
 const SearchingIcon = styled.input`
   position: absolute;
-  width: 25px;
-  top: 405px;
-  right: 380px;
+  width: 60px;
+  height:60px;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%); 
   margin: 0;
   background : url("https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png") no-repeat;
   background-position:center;
-  background-size:cover;
+  background-size:35px;
   border:none;
   cursor:pointer;
 `;
