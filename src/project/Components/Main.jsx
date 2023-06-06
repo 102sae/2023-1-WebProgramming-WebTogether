@@ -118,7 +118,7 @@ function Main() {
           />
 
        
-          <SearchingIcon type="submit" form='search-form'/>
+          <SearchingIcon type="submit" value="" form='search-form'/>
           
           </SearchingContainer>
       </form>
