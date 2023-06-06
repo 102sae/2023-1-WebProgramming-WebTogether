@@ -30,20 +30,24 @@ display:flex;
   font-size: 20px;
 `;
 
-function SearchingMain() {
+function SearchingMain({content}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
+  const [selectedNewsKey,setSelectedNewsKey]=useState("");
   const closeModal = () => setIsModalOpen(false);
+
+  const openModal =(key)=>{
+    setSelectedNewsKey(key);
+    setIsModalOpen(true);
+  }
 
   return (
     <News>
-      <ArticleCnt>검색결과 약 4,720,000개</ArticleCnt>
+      <ArticleCnt>검색결과 {Object.keys(content).length}개</ArticleCnt>
       <ArticleList>
-        <Article title="뉴스기사1111" press="언론사1" date="2000-00-00" onClick={ openModal }/>
-        <Article title="뉴스기사2" press="언론사2" date="2000-00-00" onClick={ openModal }/>
-        <Article title="뉴스기사3" press="언론사3" date="2000-00-00" onClick={ openModal }/>
-        <Article title="뉴스기사4" press="언론사4" date="2000-00-00" onClick={ openModal }/>
-        <Article title="뉴스기사5" press="언론사5" date="2000-00-00" onClick={ openModal }/>
+        {Object.entries(content).map(([key,value])=>(
+        <Article key={key} title={key} date={value.date}
+          onClick={()=>openModal(key)} />))}
+       
       </ArticleList>
 
       <Page>
@@ -56,7 +60,7 @@ function SearchingMain() {
         </div>
       </Page>
 
-      <Modal isOpen={isModalOpen} closeModal={closeModal} />
+      <Modal isOpen={isModalOpen} closeModal={closeModal} content={content} selectedKey={selectedNewsKey}/>
     </News>
   );
 }
