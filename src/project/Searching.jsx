@@ -19,6 +19,7 @@ function ProjectMain() {
 
   const location = useLocation();
   const searchTerm = location.state.result; // 검색어 받아옴
+  const searchTerm2=location.state.wordResult;
 
   const [response, setResponse] = useState([]);
   // 넘겨줄거
@@ -72,8 +73,34 @@ function ProjectMain() {
   }, []);
 
   useEffect(() => {
+    console.log(searchTerm2); // 검색어는 잘 가져옴 
+    async function getData() {
+      const id = import.meta.env.VITE_APP_API_KEY;
+      const secret_id = import.meta.env.VITE_APP_SECRET_ID;
+
+      const res = await axios.get(
+        "/v1/search/news.json",
+        {
+          params: { query: searchTerm2, display: 100, sort: "date" },
+          headers: {
+            "X-Naver-Client-Id": id,
+            "X-Naver-Client-Secret": secret_id,
+          },
+        }
+
+      );
+      setResponse(res.data.items);
+
+    }
+    getData();
+
+
+
+  }, [searchTerm2]);
+
+  useEffect(() => {
     response.forEach((item, index) => {
-      console.log(index, item.pubDate);
+      console.log(index, item);
     })
   }, [response]);
 
@@ -105,15 +132,24 @@ function ProjectMain() {
           const $ = cheerio.load(html);
 
           let articleText = "";
-          if (item.link.includes("https://www.wikitree.co.kr") || item.link.includes("http://www.dailyimpact.co.kr") || item.link.includes('https://www.ccdailynews.com')) {
-            articleText = $("p").text();
+          if (item.link.includes("https://www.wikitree.co.kr")) {
+            $("div#wikicon").children("p").each(function () {
+              articleText += $(this).text();
+            });
+
           }
+          else if (item.link.includes("http://www.dailyimpact.co.kr") || item.link.includes('https://www.ccdailynews.com')) {
+            articleText = $('p').text();
+          }
+
           else if (item.link.includes("https://www.ktv.go.kr")) {
             articleText = $("div.article.zoominout").text();
           }
           else if (item.link.includes('https://www.viva100.com')) {
-            if ($("div.left_text_box").find("p")) {
-              articleText = $("div.left_text_box").find("p").text();
+            if ($("div.left_text_box").find("p").length > 0) {
+              $("div.left_text_box").children("p").each(function () {
+                articleText += $(this).text();
+              });
             }
             if ($("div.left_text_box").find("table")) {
               articleText = $("div.left_text_box").text();
@@ -145,7 +181,7 @@ function ProjectMain() {
 
   }, [response]);
 
-  
+
 
 
 

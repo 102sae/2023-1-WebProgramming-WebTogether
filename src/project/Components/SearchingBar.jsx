@@ -86,18 +86,9 @@ const SearchingBar = () => {
     // 필터링
     const [filterData,setFilterData]=useState([]);
     const [selectedItem,setSelectedItem]=useState("");
-    const [isItemSelected,setIstItemSelected]=useState(false);
+    const [isItemSelected,setIsItemSelected]=useState(false);
     
     // 키보드 방향키 조작
-
-
-    const move = () => {
-    navigate(`/search`, {
-      state: {
-        result: wordEntered,
-      },
-    });
-  };
 
     useEffect(()=>{
         const savedData=localStorage.getItem('searchList');
@@ -141,7 +132,11 @@ const SearchingBar = () => {
             }
             handleFilter({ target: { value: wordEntered } });
             setSubmitted(false);
-            move(); // 제출 누르면 /search로 이동
+            navigate(`/search`, {
+              state: {
+                wordResult: wordEntered,
+              },
+            });
 
         }
     },[submitted,searchHistory,wordEntered]);
