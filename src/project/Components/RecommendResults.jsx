@@ -31,7 +31,7 @@ function RecommendResults({ filterData, selectedItem,setSelectedItem,setIsItemSe
 export default RecommendResults;
 
 const DataResult = styled.div`
-  width: 600px;
+  width: 800px;
   height: 200px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
