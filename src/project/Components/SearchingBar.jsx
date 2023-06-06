@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import SearchForm from './SearchForm.jsx';
+import RecommendResults from './RecommendResults.jsx';
 import { useState, useEffect,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,69 +15,10 @@ const Container = styled.div`
  
 `;
 
-const SearchingContainer = styled.div`
 
-position:relative;
-display: flex;
 
-margin-top:20px;
-`;
 
-const Bar = styled.input`
-width: 600px;
-height: 50px;
-border: 1px solid #bbb;
-border-radius: 8px;
-padding-left: 10px;
-font-size: 22px;
-font-weight: bolder;
-position: relative;
-margin-left: 10px;
-`;
 
-const SearchingIcon = styled.input`
-position: absolute;
-width: 35px;
-height:35px;
-left: 580px;
-top: 10px;
-background : url("https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png") no-repeat;
-background-position:center;
-background-size:35px;
-border:none;
-cursor:pointer;
- 
-`;
-
-const DataResult = styled.div`
-  width: 600px;
-  height: 200px;
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  overflow: hidden;
-  overflow-y: auto;
-  
-  margin-top: 5px;
-  border-radius: 5px;
-  justify-content:center;
-  
-  
-
-  .dataItem {
-    padding: 0 10px;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .dataItem:hover {
-    background-color: gray;
-    color: #fff;
-  }
-`;
 
 const SearchingBar = () => {
 
@@ -100,6 +43,7 @@ const SearchingBar = () => {
     const handleFilter=(e)=>{
         const searchWord=e.target.value;
         setWordEntered(searchWord);
+        setIsItemSelected(false);
 
         // 필터링 기능
         const newFilter=searchHistory.filter((value)=>{
@@ -132,6 +76,7 @@ const SearchingBar = () => {
             }
             handleFilter({ target: { value: wordEntered } });
             setSubmitted(false);
+            setIsItemSelected(true);
             navigate(`/search`, {
               state: {
                 wordResult: wordEntered,
@@ -143,48 +88,11 @@ const SearchingBar = () => {
 
     return (
         <Container>
-        <form id="search-form" onSubmit={handleSubmit}>
-            <SearchingContainer>
-                <Bar
-                   
-                    type="text"
-                    onChange={handleFilter}
-                    placeholder="뉴스 키워드 검색"
-                    value={wordEntered}
-                />
-               
-                <SearchingIcon type="submit" value="" form ='search-form'/>
-                        
-                    
-              
-            </SearchingContainer>
-        </form>
+        <SearchForm handleSubmit={handleSubmit} handleFilter={handleFilter} wordEntered={wordEntered}/>
 
         {!isItemSelected && filterData.length !== 0 && (
-          <DataResult>
-            {filterData.slice(0, 15).map((searchTerms, index) => {
-             
-              return (
-                <a
-                  key={index}
-                  className={`dataItem ${
-                    searchTerms === selectedItem ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    setSelectedItem(searchTerms);
-                    setWordEntered(searchTerms);
-                    setIsItemSelected(true);
-                  }}
-                
-                  
-                 
-                  target="_blank"
-                >
-                  <p>{searchTerms}</p>
-                </a>
-              );
-            })}
-          </DataResult>
+          <RecommendResults filterData={filterData} selectedItem={selectedItem} setSelectedItem={setSelectedItem}
+          setIsItemSelected={setIsItemSelected} setWordEntered={setWordEntered}/>
         )}
 
         </Container>
