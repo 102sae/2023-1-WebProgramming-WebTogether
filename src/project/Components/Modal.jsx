@@ -86,6 +86,7 @@ justify-content: center;
 align-items: center;
 margin-bottom: 10px;
 border-radius: 10px;
+overflow:auto;
 `;
 
 const KeywordGroup = styled.div`

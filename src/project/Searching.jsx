@@ -3,7 +3,7 @@ import Navbar from "./Components/Navbar";
 import SearchingBar from "./Components/SearchingBar";
 import SearchingMain from "./Components/SearchingMain";
 import Footer from "../landing/Components/Footer";
-
+import {decode} from 'html-entities';
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -100,7 +100,7 @@ function ProjectMain() {
 
   useEffect(() => {
     response.forEach((item, index) => {
-      console.log(index, item);
+      console.log(index, item.title);
     })
   }, [response]);
 
@@ -159,8 +159,11 @@ function ProjectMain() {
 
           }
 
+        const titleWithoutTags = decode(item.title).replace(/<[^>]+>/g, "");
+
+
           if (articleText) {
-            contentDict[item.title] = {
+            contentDict[titleWithoutTags] = {
               link: item.link,
               date: convertDate(item.pubDate),
               text: articleText
