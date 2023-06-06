@@ -23,7 +23,7 @@ const SearchNews = () => {
         "/v1/search/news.json", // 불러올 api 주소
         {
           params: { query: searchTerm, display: 100, sort: "date" }, // query는 필수값
-          // dispplay : 몇 개 기사를 나열할건지
+          // display : 몇 개 기사를 나열할건지
           headers: {
             "X-Naver-Client-Id": id,
             "X-Naver-Client-Secret": secret_id,
@@ -36,7 +36,7 @@ const SearchNews = () => {
   }, []);
 
   useEffect(() => {
-    response.forEach((dataa) => {
+    response.forEach((dataa, index) => {
       //console.log(dataa.link);
       if (
         dataa.link.includes("https://n.news.naver.com") ||
@@ -44,6 +44,7 @@ const SearchNews = () => {
         dataa.link.includes("https://www.ktv.go.kr") ||
         dataa.link.includes("https://www.wikitree.co.kr")
       ) {
+        console.log(index, dataa.link);
         const extracted = dataa.link.split("/").slice(3).join("/");
         const geturl = "/" + extracted;
 
@@ -53,14 +54,23 @@ const SearchNews = () => {
             const html = response.data;
             const $ = cheerio.load(html);
 
-            const pTag = $("p").text();
-            const dic_area = $("div#dic_area").text();
+            let pTag = "";
+            if (dataa.link.includes("https://www.wikitree.co.kr")) {
+              pTag = $("p").text();
+            }
+
+            let dic_area = "";
+            if (dataa.link.includes("https://n.news.naver.com")) {
+              dic_area = $("div#dic_area").text();
+            }
+
             const articeBody = $("div#articeBody").text();
             const zoominout = $("div.article zoominout").text();
+            console.log(typeof dic_area);
             const articles = [pTag, dic_area, articeBody, zoominout];
             articles.forEach((article) => {
               if (article) {
-                array.push(article);
+                array.push(dataa.link + article);
               }
             });
 
@@ -72,12 +82,12 @@ const SearchNews = () => {
   }, [response]);
 
   useEffect(() => {
-    console.log("내용물", content.length);
+    console.log("크롤링 한 개수", content.length);
   }, [content]);
   return (
     <div>
       {content.map((item, index) => (
-        <p key={index} style={{ border: "1px solid black", color: "white" }}>
+        <p key={index} style={{ border: "1px solid black" }}>
           {item}
         </p>
       ))}
