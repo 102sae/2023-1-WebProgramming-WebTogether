@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchForm from './SearchForm.jsx';
 import RecommendResults from './RecommendResults.jsx';
-import { useState, useEffect,useRef } from "react";
+import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -15,88 +15,135 @@ const Container = styled.div`
  
 `;
 
+const initialState = {
+  searchHistory: [],
+  filterData: [],
+  wordEntered: '',
+  submitted: false,
+  isItemSelected: false,
+  selectedItem: '',
+};
 
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'SET_SEARCH_HISTORY':
+      return {
+        ...state, searchHistory: action.payload
+      };
+    case 'SET_FILTER_DATA':
+      return {
+        ...state, filterData: action.payload,
+      };
+    case 'SET_WORD_ENTERED':
+      return {
+        ...state, wordEntered: action.payload,
+      };
+    case 'SET_SUBMITTED':
+      return {
+        ...state, submitted: action.payload,
+      };
+    case 'SET_IS_ITEM_SELECTED':
+      return {
+        ...state, isItemSelected: action.payload,
+      };
+    case 'SET_SELECTED_ITEM':
+      return {
+        ...state, selectedItem: action.payload,
+      };
+    default:
+      return state;
+
+
+  }
+}
 
 
 
 
 const SearchingBar = () => {
 
-    const [searchHistory,setsearchHistory]=useState([]);
-    const [wordEntered,setWordEntered]=useState("");
-    const [submitted,setSubmitted]=useState(false);
-    const navigate = useNavigate();
-    // 필터링
-    const [filterData,setFilterData]=useState([]);
-    const [selectedItem,setSelectedItem]=useState("");
-    const [isItemSelected,setIsItemSelected]=useState(false);
-    
-    // 키보드 방향키 조작
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
 
-    useEffect(()=>{
-        const savedData=localStorage.getItem('searchList');
-        if(savedData){
-            setsearchHistory(JSON.parse(savedData).result);
-        }
-    },[]);
 
-    const handleFilter=(e)=>{
-        const searchWord=e.target.value;
-        setWordEntered(searchWord);
-        setIsItemSelected(false);
 
-        // 필터링 기능
-        const newFilter=searchHistory.filter((value)=>{
-            return value.toLowerCase().includes(searchWord.toLowerCase());
-        })
+  // 키보드 방향키 조작
 
-        if (searchWord=== ""){
-            setFilterData([]);
-        }
-        else{
-            setFilterData(newFilter);
-        }
+  useEffect(() => {
+    const savedData = localStorage.getItem('searchList');
+    if (savedData) {
+      dispatch({ type: 'SET_SEARCH_HISTORY', payload: JSON.parse(savedData).result });
     }
+  }, []);
 
-    const handleSubmit=  (e)=>{
-        e.preventDefault();
-        setSubmitted(true);
+  const handleFilter = (e) => {
+    const searchWord = e.target.value;
+    dispatch({ type: 'SET_WORD_ENTERED', payload: searchWord });
+    dispatch({ type: 'SET_IS_ITEM_SELECTED', payload: false });
+
+    // 필터링 기능
+    const newFilter = state.searchHistory.filter((value) => {
+      return value.toLowerCase().includes(searchWord.toLowerCase());
+    })
+
+    if (searchWord === "") {
+      dispatch({ type: 'SET_FILTER_DATA', payload: [] });
+    } else {
+      dispatch({ type: 'SET_FILTER_DATA', payload: newFilter });
+
     }
+  }
 
-    useEffect(()=>{
-        if(submitted){
-            // 중복된 값은 로컬 스토리지에 포함시키지 않음
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch({ type: 'SET_SUBMITTED', payload: true });
+  };
 
-            const isWordEnteredExists=searchHistory.includes(wordEntered);
-            if(!isWordEnteredExists){
-                const newData=[...searchHistory,wordEntered];
-                setsearchHistory(newData);
-                localStorage.setItem("searchList", JSON.stringify({ result: newData }));
+  const move = () => {
+    navigate(`/search`, {
+      state: {
+        wordResult: state.wordEntered,
+      },
+    });
 
-            }
-            handleFilter({ target: { value: wordEntered } });
-            setSubmitted(false);
-            setIsItemSelected(true);
-            navigate(`/search`, {
-              state: {
-                wordResult: wordEntered,
-              },
-            });
+  }
 
-        }
-    },[submitted,searchHistory,wordEntered]);
+  useEffect(() => {
+    if (state.submitted) {
+      // 중복된 값은 로컬 스토리지에 포함시키지 않음
 
-    return (
-        <Container>
-        <SearchForm handleSubmit={handleSubmit} handleFilter={handleFilter} wordEntered={wordEntered}/>
+      const isWordEnteredExists = state.searchHistory.includes(state.wordEntered);
+      if (!isWordEnteredExists) {
+        const newData = [...state.searchHistory, state.wordEntered];
+        dispatch({ type: 'SET_SEARCH_HISTORY', payload: newData });
+        localStorage.setItem("searchList", JSON.stringify({ result: newData }));
 
-        {!isItemSelected && filterData.length !== 0 && (
-          <RecommendResults filterData={filterData} selectedItem={selectedItem} setSelectedItem={setSelectedItem}
-          setIsItemSelected={setIsItemSelected} setWordEntered={setWordEntered}/>
-        )}
+      }
+      handleFilter({ target: { value: state.wordEntered } });
+      dispatch({ type: 'SET_SUBMITTED', payload: false });
+      dispatch({ type: 'SET_IS_ITEM_SELECTED', payload: true });
+      move();
 
-        </Container>
-    );
+
+
+    }
+  }, [state.submitted, state.searchHistory, state.wordEntered]);
+
+  return (
+    <Container>
+      <SearchForm handleSubmit={handleSubmit} handleFilter={handleFilter} wordEntered={state.wordEntered} />
+
+
+      {!state.isItemSelected && state.filterData.length !== 0 && (
+        <RecommendResults filterData={state.filterData} selectedItem={state.selectedItem}
+          setSelectedItem={(selectedItem) => dispatch({ type: 'SET_SELECTED_ITEM', payload: selectedItem })} setIsItemSelected={(isItemSelected) => dispatch({ type: 'SET_IS_ITEM_SELECTED', payload: isItemSelected })}
+          setWordEntered={(wordEntered) => dispatch({ type: 'SET_WORD_ENTERED', payload: wordEntered })} />
+
+      )}
+
+    </Container>
+  );
 };
 
 export default SearchingBar;
