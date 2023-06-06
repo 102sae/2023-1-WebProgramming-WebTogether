@@ -13,8 +13,9 @@ export default defineConfig({
         changeOrigin: true,
         secure: false
       },
+      '/main/view':'https://www.viva100.com',
       
-      
+      '/news/articleView':'https://www.ccdailynews.com',
       '/news':'http://www.dailyimpact.co.kr',
       /*'/read': {
         target: 'https://entertain.naver.com',
@@ -29,9 +30,16 @@ export default defineConfig({
         secure:false,
         ws:true
       }*/
-      '/read': 'https://entertain.naver.com',
+     
       '/view':'https://www.ktv.go.kr',
-      '/articles':'https://www.wikitree.co.kr'
+      '/articles':'https://www.wikitree.co.kr',
+      "/read": {
+        target: "https://entertain.naver.com",
+        //changeOrigin: true,
+        secure:false,
+      },
+
+      
       
       
         
