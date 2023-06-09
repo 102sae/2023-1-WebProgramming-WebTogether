@@ -4,7 +4,7 @@ import Member from "./Member";
 import Taeyeon from "../../assets/김태연.jpg";
 
 const Team = styled.section`
-  height: 750px;
+  height: 660px;
   margin-top: -16px;
   padding-top: 100px;
   font-size: 80px;

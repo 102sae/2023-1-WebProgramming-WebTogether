@@ -1,22 +1,64 @@
+import React from "react";
 import styled from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import RecommendResults from "./RecommendResults.jsx";
+import SearchForm from "./SearchForm.jsx";
+import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
+const initialState = {
+  data: [],
+  filterData: [],
+  wordEntered: "",
+  submitted: false,
+  isItemSelected: false,
+  selectedItem: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_DATA":
+      return {
+        ...state,
+        data: action.payload,
+      };
+    case "SET_FILTER_DATA":
+      return {
+        ...state,
+        filterData: action.payload,
+      };
+    case "SET_WORD_ENTERED":
+      return {
+        ...state,
+        wordEntered: action.payload,
+      };
+    case "SET_SUBMITTED":
+      return {
+        ...state,
+        submitted: action.payload,
+      };
+    case "SET_IS_ITEM_SELECTED":
+      return {
+        ...state,
+        isItemSelected: action.payload,
+      };
+    case "SET_SELECTED_ITEM":
+      return {
+        ...state,
+        selectedItem: action.payload,
+      };
+    default:
+      return state;
+  }
+}
+
 function Main() {
-  const [data, setData] = useState([]);
-  const [filterData, setFilterData] = useState([]);
-  const [wordEntered, setWordEntered] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("");
-  const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
-  const [isItemSelected, setIsItemSelected] = useState(false);
-  const selectedItemRef = useRef(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const navigate = useNavigate();
 
   const move = () => {
     navigate(`/search`, {
       state: {
-        result: wordEntered,
+        result: state.wordEntered,
       },
     });
   };
@@ -24,112 +66,73 @@ function Main() {
   useEffect(() => {
     const savedData = localStorage.getItem("searchList");
     if (savedData) {
-      setData(JSON.parse(savedData).result);
+      dispatch({ type: "SET_DATA", payload: JSON.parse(savedData).result });
     }
   }, []);
 
   const handleFilter = (e) => {
     const searchWord = e.target.value;
-    setWordEntered(searchWord);
-    setIsItemSelected(false);
+    dispatch({ type: "SET_WORD_ENTERED", payload: searchWord });
+    dispatch({ type: "SET_IS_ITEM_SELECTED", payload: false });
 
-    const newFilter = data.filter((value) => {
+    const newFilter = state.data.filter((value) => {
       return value.toLowerCase().includes(searchWord.toLowerCase());
     });
 
     if (searchWord === "") {
-      setFilterData([]);
+      dispatch({ type: "SET_FILTER_DATA", payload: [] });
     } else {
-      setFilterData(newFilter);
+      dispatch({ type: "SET_FILTER_DATA", payload: newFilter });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    dispatch({ type: "SET_SUBMITTED", payload: true });
   };
 
   useEffect(() => {
-    if (submitted) {
-      const isWordEnteredExists = data.includes(wordEntered);
+    if (state.submitted) {
+      const isWordEnteredExists = state.data.includes(state.wordEntered);
 
       if (!isWordEnteredExists) {
-        const newData = [...data, wordEntered];
-        setData(newData);
+        const newData = [...state.data, state.wordEntered];
+        dispatch({ type: "SET_DATA", payload: newData });
         localStorage.setItem("searchList", JSON.stringify({ result: newData }));
       }
 
-      handleFilter({ target: { value: wordEntered } });
+      handleFilter({ target: { value: state.wordEntered } });
 
-      setSubmitted(false);
+      dispatch({ type: "SET_SUBMITTED", payload: false });
 
       move();
     }
-  }, [submitted, data, wordEntered]);
-
-  const handleKeyArrow = (e) => {
-    if (filterData.length > 0) {
-      if (e.key === "ArrowUp") {
-        e.preventDefault();
-        setSelectedItemIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-      } else if (e.key === "ArrowDown") {
-        e.preventDefault();
-        setSelectedItemIndex((prevIndex) =>
-          Math.min(prevIndex + 1, filterData.length - 1)
-        );
-      }
-    }
-  };
-  useEffect(() => {
-    if (selectedItemRef.current) {
-      selectedItemRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
-    }
-  }, [selectedItemIndex]);
+  }, [state.submitted, state.data, state.wordEntered]);
 
   return (
     <MainContainer>
       <LogoName>WEB-TOGETHER</LogoName>
 
-      <form id="search-form" className="form" onSubmit={handleSubmit}>
-        <SearchingContainer>
-          <SearchingBar
-            type="text"
-            placeholder="뉴스 키워드 검색"
-            onChange={handleFilter}
-            value={wordEntered}
-          />
+      <SearchForm
+        handleSubmit={handleSubmit}
+        handleFilter={handleFilter}
+        wordEntered={state.wordEntered}
+      />
 
-          <SearchingIcon type="submit" form="search-form" />
-        </SearchingContainer>
-      </form>
-
-      {!isItemSelected && filterData.length !== 0 && (
-        <DataResult>
-          {filterData.slice(0, 15).map((searchTerms, index) => {
-            const isSelected = index === selectedItemIndex;
-            return (
-              <a
-                key={index}
-                className={`dataItem ${
-                  searchTerms === selectedItem ? "active" : ""
-                }`}
-                onClick={() => {
-                  setSelectedItem(searchTerms);
-                  setWordEntered(searchTerms);
-                  setIsItemSelected(true);
-                }}
-                onKeyDown={handleKeyArrow}
-                ref={isSelected ? selectedItemRef : null}
-                target="_blank"
-              >
-                <p>{searchTerms}</p>
-              </a>
-            );
-          })}
-        </DataResult>
+      {!state.isItemSelected && state.filterData.length !== 0 && (
+        <RecommendResults
+          filterData={state.filterData}
+          selectedItem={state.selectedItem}
+          setSelectedItem={(selectedItem) =>
+            dispatch({ type: "SET_SELECTED_ITEM", payload: selectedItem })
+          }
+          setIsItemSelected={(isItemSelected) =>
+            dispatch({ type: "SET_IS_ITEM_SELECTED", payload: isItemSelected })
+          }
+          setWordEntered={(wordEntered) =>
+            dispatch({ type: "SET_WORD_ENTERED", payload: wordEntered })
+          }
+        />
       )}
     </MainContainer>
   );
@@ -152,65 +155,4 @@ const LogoName = styled.h1`
   margin-bottom: 20px;
   font-size: 90px;
   color: white;
-`;
-
-const SearchingContainer = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
-const SearchingBar = styled.input`
-  width: 800px;
-  height: 60px;
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  padding-left: 10px;
-  font-size: 25px;
-  font-weight: bolder;
-`;
-
-const SearchingIcon = styled.input`
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  margin: 0;
-  background: url("https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png")
-    no-repeat;
-  background-position: center;
-  background-size: 35px;
-  border: none;
-  cursor: pointer;
-`;
-
-const DataResult = styled.div`
-  width: 800px;
-  height: 200px;
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  overflow: hidden;
-  overflow-y: auto;
-
-  margin-top: 5px;
-  border-radius: 5px;
-  justify-content: center;
-
-  .dataItem {
-    padding: 0 10px;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .dataItem:hover {
-    background-color: gray;
-    color: #fff;
-  }
 `;

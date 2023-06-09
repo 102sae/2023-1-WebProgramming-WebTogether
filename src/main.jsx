@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     element: <FilterSearch />,
   },
   {
-    path: "/result/:searchTerm",
+    path: "/result",
     element: <SearchNews />,
   },
   {

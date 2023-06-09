@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const ModalOverlay = styled.div`
@@ -62,9 +62,16 @@ const ModalContentInfo = styled.div`
   height: 100%;
   background-color: #d2d2d280;
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   border-radius: 10px;
+  div {
+    flex: 1;
+    word-wrap: break-word;
+  }
+
+  p {
+    margin: 5px 0;
+  }
 `;
 
 const ModalContentBody = styled.div`
@@ -76,6 +83,7 @@ const ModalContentBody = styled.div`
   align-items: center;
   margin-bottom: 10px;
   border-radius: 10px;
+  overflow: auto;
 `;
 
 const KeywordGroup = styled.div`
@@ -98,25 +106,47 @@ const Keyword = styled.div`
   align-items: center;
 `;
 
-function Modal({ isOpen, closeModal }) {
+function Modal({ isOpen, closeModal, content, selectedKey }) {
+  const [selectedNews, setSelectedNews] = useState({});
+
+  useEffect(() => {
+    if (isOpen) {
+      const selectedValue = content[selectedKey];
+
+      setSelectedNews(selectedValue);
+      console.log(selectedValue.date);
+    }
+  }, [isOpen, content, selectedKey]);
+
   return (
     <ModalOverlay style={{ display: isOpen ? "block" : "none" }}>
       <ModalWindow>
         <CloseButton onClick={closeModal}>X</CloseButton>
-        <ModalTitle>뉴스기사 제목</ModalTitle>
+        <ModalTitle>제목 :{selectedKey}</ModalTitle>
         <ModalMain>
           <ModalContentSummary>
-            <p>요약문</p>
+            <p>요약문 </p>
           </ModalContentSummary>
           <ModalContentInfo>
-            <p>언론사 : </p>
-            <p>작성날짜 : </p>
-            <p>기자 : </p>
-            <p>링크 : </p>
+            <div>
+              <p>언론사 : </p>
+              <p>작성날짜:{selectedNews.date} </p>
+              <p>기자 : </p>
+              <p>
+                링크 :{" "}
+                <a
+                  href={selectedNews.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {selectedNews.link}
+                </a>
+              </p>
+            </div>
           </ModalContentInfo>
         </ModalMain>
         <ModalContentBody>
-          <p>기사본문</p>
+          <p>{selectedNews.text}</p>
         </ModalContentBody>
 
         <KeywordGroup>
