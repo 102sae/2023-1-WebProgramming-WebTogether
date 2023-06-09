@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 const Main = styled.section`
-  height: 750px;
+  height: 660px;
   padding-top: 10px;
   background-color: #d2d2d2;
   display: flex;

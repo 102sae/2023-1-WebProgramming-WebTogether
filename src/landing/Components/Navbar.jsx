@@ -58,9 +58,15 @@ function Navbar(props) {
       <NavbarWrapper>
         <NavList>
           <li>
-            <NavTeam onClick={props.Member}>
-              MEMBERS
-            </NavTeam>
+            {window.location.pathname === '/project' ? (
+              <NavItem href="/" onClick={() => window.scrollTo({ top: 100, behavior: "smooth" })}>
+                MEMBERS
+              </NavItem>
+            ) : (
+              <NavTeam onClick={props.Member}>
+                MEMBERS
+              </NavTeam>
+            )}
           </li>
           <li>
             <NavItem href="/project">
@@ -73,6 +79,7 @@ function Navbar(props) {
             </NavItem>
           </li>
         </NavList>
+
       </NavbarWrapper>
     </NavHeader>
   );
