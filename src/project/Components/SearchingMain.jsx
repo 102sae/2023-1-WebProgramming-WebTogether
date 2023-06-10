@@ -3,8 +3,6 @@ import styled from "styled-components";
 import Article from "./Article";
 import Modal from "./Modal";
 
-export const GPT_API_KEY = import.meta.env.VITE_GPT_API_KEY;
-
 const News = styled.div`
   width: 72%;
   margin: 15px auto 0;
