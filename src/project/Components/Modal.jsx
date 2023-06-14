@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FadeLoader } from "react-spinners";
 
@@ -56,6 +56,9 @@ const ModalContentSummary = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  p {
+    padding: 25px 15px;
+  }
 `;
 
 const ModalContentInfo = styled.div`
@@ -63,11 +66,11 @@ const ModalContentInfo = styled.div`
   height: 100%;
   background-color: #d2d2d280;
   display: flex;
-
   border-radius: 10px;
   div {
     flex: 1;
     word-wrap: break-word;
+    padding: 25px 15px;
   }
 
   p {
@@ -85,6 +88,9 @@ const ModalContentBody = styled.div`
   margin-bottom: 10px;
   border-radius: 10px;
   overflow: auto;
+  p {
+    padding: 25px 15px;
+  }
 `;
 
 const KeywordGroup = styled.div`
@@ -191,7 +197,7 @@ function Modal({ isOpen, closeModal, content, selectedKey }) {
     <ModalOverlay style={{ display: isOpen ? "block" : "none" }}>
       <ModalWindow>
         <CloseButton onClick={closeModal}>X</CloseButton>
-        <ModalTitle>제목 :{selectedKey}</ModalTitle>
+        <ModalTitle>{selectedKey}</ModalTitle>
         <ModalMain>
           <ModalContentSummary>
             <p>
@@ -216,11 +222,12 @@ function Modal({ isOpen, closeModal, content, selectedKey }) {
           </ModalContentSummary>
           <ModalContentInfo>
             <div>
-              <p>언론사 : </p>
-              <p>작성날짜:{selectedNews.date} </p>
-              <p>기자 : </p>
               <p>
-                링크 :{" "}
+                <span style={{ fontWeight: "bold" }}>작성 날짜 : </span>
+                {selectedNews.date}
+              </p>
+              <p>
+                <span style={{ fontWeight: "bold" }}>링크 : </span>
                 <a
                   href={selectedNews.link}
                   target="_blank"
