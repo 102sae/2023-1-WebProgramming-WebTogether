@@ -80,7 +80,7 @@ const ModalContentInfo = styled.div`
 
 const ModalContentBody = styled.div`
   width: 100%;
-  height: 40%;
+  height: auto;
   background-color: #d2d2d280;
   display: flex;
   justify-content: center;
@@ -126,6 +126,21 @@ const LoadingText = styled.div`
   text-align: center;
 `;
 
+const ScrapButton = styled.button`
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  padding: 10px 20px;
+  background-color: #5b5b5b;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+
 export const GPT_API_KEY = import.meta.env.VITE_GPT_API_KEY;
 
 function Modal({ isOpen, closeModal, content, selectedKey }) {
@@ -133,7 +148,7 @@ function Modal({ isOpen, closeModal, content, selectedKey }) {
   const [summaryNews, setSummaryNews] = useState("");
   const [keywords, setKeywords] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [isScrapped,setIsScrapped]=useState(false);
   async function chat(question) {
     setLoading(true);
     setSummaryNews("");
@@ -193,6 +208,25 @@ function Modal({ isOpen, closeModal, content, selectedKey }) {
     }
   }, [selectedNews]);
 
+  const onScrap=(selectedNews)=>{
+    const today=new Date().toLocaleDateString();
+    const scrappedData=JSON.parse(localStorage.getItem('scrapped')) || {};
+
+    if(!scrappedData[today]){
+      scrappedData[today]=[];
+    }
+
+    const existingKeys=scrappedData[today].map(item => item.selectedKey);
+    if(!existingKeys.includes(selectedKey)){
+      scrappedData[today].push({
+        content:selectedNews.text,
+        selectedKey:selectedKey,
+      });
+      localStorage.setItem('scrapped',JSON.stringify(scrappedData));
+      setIsScrapped(true);
+    }
+  }
+
   return (
     <ModalOverlay style={{ display: isOpen ? "block" : "none" }}>
       <ModalWindow>
@@ -248,6 +282,7 @@ function Modal({ isOpen, closeModal, content, selectedKey }) {
             <Keyword key={`keyword_${index}`}>{keywordItem}</Keyword>
           ))}
         </KeywordGroup>
+        <ScrapButton onClick={()=>onScrap(selectedNews)}>{isScrapped ? "✔ 스크랩됨" : "스크랩"}</ScrapButton>
       </ModalWindow>
     </ModalOverlay>
   );
