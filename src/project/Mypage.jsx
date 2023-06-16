@@ -4,29 +4,17 @@ import MypageMain from "./Components/MypageMain";
 import {useEffect,useState} from 'react';
 
 function Mypage() {
-  //const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [scrappedArticles,setScrappedArticles]=useState({});
-  //const closeModal = () => setIsModalOpen(false);
- 
-
-  //const openModal = (key) => {
-    
-    //setIsModalOpen(true);
-  //};
-
   
-
+  const [scrappedArticles,setScrappedArticles]=useState({});
+ 
   useEffect(()=>{
     setScrappedArticles(JSON.parse(localStorage.getItem('scrapped')) || {});
   },[]);
   return (
     <>
       <Navbar />
-      <MypageMain 
-       
+      <MypageMain       
         scrappedData={scrappedArticles}
-       
       />
       <Footer />
     </>
