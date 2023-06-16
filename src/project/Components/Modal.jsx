@@ -80,7 +80,7 @@ const ModalContentInfo = styled.div`
 
 const ModalContentBody = styled.div`
   width: 100%;
-  height: 40%;
+  height: auto;
   background-color: #d2d2d280;
   display: flex;
   justify-content: center;
@@ -126,13 +126,30 @@ const LoadingText = styled.div`
   text-align: center;
 `;
 
+const ScrapButton = styled.button`
+  position: absolute;
+  right:10px;
+  
+  background-color: #5b5b5b;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 8px 16px;
+`;
+
+
 export const GPT_API_KEY = import.meta.env.VITE_GPT_API_KEY;
 
-function Modal({ isOpen, closeModal, content, selectedKey }) {
+function Modal({ isOpen, closeModal, content, selectedKey,showScrapButton }) {
   const [selectedNews, setSelectedNews] = useState({});
   const [summaryNews, setSummaryNews] = useState("");
   const [keywords, setKeywords] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isScrapped,setIsScrapped]=useState(false);
+
 
   async function chat(question) {
     setLoading(true);
@@ -177,10 +194,11 @@ function Modal({ isOpen, closeModal, content, selectedKey }) {
 
   useEffect(() => {
     if (isOpen) {
+      
       const selectedValue = content[selectedKey];
 
       setSelectedNews(selectedValue);
-      console.log(selectedValue.date);
+      //console.log(selectedValue.date);
     }
   }, [isOpen, content, selectedKey]);
 
@@ -193,10 +211,39 @@ function Modal({ isOpen, closeModal, content, selectedKey }) {
     }
   }, [selectedNews]);
 
+  const onScrap =() =>{
+
+    const today=new Date().toLocaleDateString(); //오늘 날짜
+    const scrappedData=JSON.parse(localStorage.getItem('scrapped')) || {};
+    console.log(scrappedData);
+    if(!scrappedData[today]){
+      scrappedData[today]=[];
+    }
+    
+    // 이미 존재하는 기사인지 확인 
+    const existingKeys=scrappedData[today].map(item => item.selectedKey);
+    if(!existingKeys.includes(selectedKey)){
+      scrappedData[today].push({
+        content:selectedNews,
+        selectedKey:selectedKey,
+      });
+      localStorage.setItem('scrapped',JSON.stringify(scrappedData));
+    }
+    setIsScrapped(true);
+
+  }
+
+
+
+  
+
   return (
     <ModalOverlay style={{ display: isOpen ? "block" : "none" }}>
       <ModalWindow>
-        <CloseButton onClick={closeModal}>X</CloseButton>
+        <CloseButton onClick={()=>{
+          closeModal();
+          setIsScrapped(false);
+        }}>X</CloseButton>
         <ModalTitle>{selectedKey}</ModalTitle>
         <ModalMain>
           <ModalContentSummary>
@@ -248,6 +295,12 @@ function Modal({ isOpen, closeModal, content, selectedKey }) {
             <Keyword key={`keyword_${index}`}>{keywordItem}</Keyword>
           ))}
         </KeywordGroup>
+        {
+          showScrapButton && (
+            <ScrapButton onClick={onScrap}>{isScrapped ? "✔ 스크랩됨" : "스크랩"}</ScrapButton>
+          )
+        }
+        
       </ModalWindow>
     </ModalOverlay>
   );

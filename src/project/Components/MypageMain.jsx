@@ -1,23 +1,57 @@
-import styled from "styled-components";
-import SearchingMain from "./SearchingMain";
+import React from "react";
+import Article from "./Article";
+import Modal from './Modal';
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-const Mypage = styled.div`
-  margin-top: 100px;
-  height: 645px;
+const DateWrapper = styled.div`
+  margin-bottom: 20px;
+  padding-top: 100px; 
 `;
 
-const Title = styled.h1`
-  width: 100px;
-  margin: 10px auto;
-  color: white;
+const DateHeading = styled.h1`
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 10px;
+  color:white;
 `;
 
-function MypageMain() {
+function MypageMain({ scrappedData }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedContent, setSelectedContent] = useState({});
+  const [selectedContentKey, setSelectedContentKey] = useState('');
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <Mypage>
-      <Title>MYPAGE</Title>
-      <SearchingMain />
-    </Mypage>
+    <div>
+      {Object.keys(scrappedData).map((date) => (
+        <DateWrapper key={date}>
+          <DateHeading>스크랩한 날짜: {date}</DateHeading>
+          {scrappedData[date].map((article, index) => (
+            <Article
+              key={`article_${index}`}
+              title={article.selectedKey}
+              date={article.content.date}
+              onClick={() => {
+                setIsModalOpen(true);
+                const contentDict = {};
+                contentDict[article.selectedKey] = article.content;
+                setSelectedContent(contentDict);
+                setSelectedContentKey(article.selectedKey);
+              }}
+            />
+          ))}
+        </DateWrapper>
+      ))}
+
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        content={selectedContent}
+        selectedKey={selectedContentKey}
+        showScrapButton={false}
+      />
+    </div>
   );
 }
 

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Article from "./Article";
 import Modal from "./Modal";
 
+
 const News = styled.div`
   width: 72%;
   margin: 15px auto 0;
@@ -33,6 +34,7 @@ const Page = styled.div`
 function SearchingMain({ content }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNewsKey, setSelectedNewsKey] = useState("");
+  
   const closeModal = () => setIsModalOpen(false);
 
   const openModal = (key) => {
@@ -69,7 +71,10 @@ function SearchingMain({ content }) {
         closeModal={closeModal}
         content={content}
         selectedKey={selectedNewsKey}
+        showScrapButton={true}
+        
       />
+      
     </News>
   );
 }
