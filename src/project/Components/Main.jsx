@@ -145,7 +145,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  margin-top: 250px;
+  margin-top: 100px;
   margin-bottom: 300px;
 `;
 

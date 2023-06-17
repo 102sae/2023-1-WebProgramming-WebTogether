@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function SearchForm({ handleSubmit, handleFilter, wordEntered }) {
+function SearchForm({ handleSubmit, handleFilter, wordEntered, searchTerm }) {
     return (
       <form id="search-form" className="form" onSubmit={handleSubmit}>
         <SearchingContainer>
           <SearchingBar
             type="text"
-            placeholder="뉴스 키워드 검색"
+            placeholder={searchTerm ? searchTerm : "뉴스 키워드 입력"}
             onChange={handleFilter}
             value={wordEntered}
           />

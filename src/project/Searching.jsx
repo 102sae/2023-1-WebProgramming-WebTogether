@@ -142,7 +142,7 @@ function ProjectMain() {
   return (
     <>
       <Navbar />
-      <SearchingBar />
+      <SearchingBar searchTerm={searchTerm}/>
       <SearchingMain content={content} />
       <Footer />
     </>
