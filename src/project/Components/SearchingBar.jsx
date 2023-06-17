@@ -57,7 +57,7 @@ function reducer(state, action) {
   }
 }
 
-const SearchingBar = () => {
+function SearchingBar({ searchTerm }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const navigate = useNavigate();
 
@@ -128,6 +128,7 @@ const SearchingBar = () => {
         handleSubmit={handleSubmit}
         handleFilter={handleFilter}
         wordEntered={state.wordEntered}
+        searchTerm={searchTerm}
       />
 
       {!state.isItemSelected && state.filterData.length !== 0 && (

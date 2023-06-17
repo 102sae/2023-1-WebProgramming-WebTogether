@@ -59,8 +59,8 @@ function Navbar(props) {
         <NavList>
           <li>
             {window.location.pathname === '/project' ? (
-              <NavItem href="/" onClick={() => window.scrollTo({ top: 100, behavior: "smooth" })}>
-                MEMBERS
+              <NavItem href="/">
+                HOME
               </NavItem>
             ) : (
               <NavTeam onClick={props.Member}>
