@@ -4,16 +4,16 @@ import Main from "./Components/Main";
 import Footer from "./Components/Footer";
 
 function LandingMain() {
-  const inputForm = useRef();
+  const scrollToMember = useRef();
 
-  const onMoveToForm = () => {
-    inputForm.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const onMoveToMember = () => {
+    scrollToMember.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
     <>
-      <Navbar Member={onMoveToForm} />
-      <Main ref={inputForm} />
+      <Navbar Member={onMoveToMember} />
+      <Main ref={scrollToMember} />
       <Footer />
     </>
   );
