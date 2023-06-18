@@ -22,9 +22,11 @@ function MypageMain({ scrappedData }) {
   const [selectedContentKey, setSelectedContentKey] = useState('');
   const closeModal = () => setIsModalOpen(false);
 
+  const sortedDates = Object.keys(scrappedData).sort((a, b) => new Date(b) - new Date(a));
+
   return (
     <div>
-      {Object.keys(scrappedData).map((date) => (
+      {sortedDates.map((date) => (
         <DateWrapper key={date}>
           <DateHeading>스크랩한 날짜: {date}</DateHeading>
           {scrappedData[date].map((article, index) => (
