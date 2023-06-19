@@ -38,6 +38,19 @@ export default defineConfig({
         //changeOrigin: true,
         secure:false,
       },
+      
+      "/Article/View":"https://ch.yes24.com",
+      "/ebsnews":"https://news.ebs.co.kr",
+      "/archives":"http://kor.theasian.asia",
+      "/newsView":"https://www.kukinews.com",
+      "/board":"https://www.fashionn.com",
+      "/web":"https://www.yeongnam.com",
+      "/free/content":"https://www.thebell.co.kr",
+      "/news/article/article_view":"https://www.notepet.co.kr"
+      
+      
+
+     
 
       
       
@@ -48,4 +61,3 @@ export default defineConfig({
     
   }
 })
-
