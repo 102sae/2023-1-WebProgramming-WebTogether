@@ -1,19 +1,22 @@
-import React from "react";
 import Article from "./Article";
 import Modal from "./Modal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
+const MYPAGETITLE = styled.h1`
+  color: white;
+  display: flex;
+  justify-content: center;
+`;
 const DateWrapper = styled.div`
-  margin-bottom: 20px;
-  padding-top: 100px;
+  width: 72%;
+  margin: 30px auto;
 `;
 
 const DateHeading = styled.h1`
   font-weight: bold;
-  font-size: 30px;
-  margin-bottom: 10px;
-  color: white;
+  font-size: 20px;
+  color: #ffffff80;
 `;
 
 function MypageMain({ scrappedData }) {
@@ -24,11 +27,16 @@ function MypageMain({ scrappedData }) {
   const [keyword, setKeyword] = useState([]);
   const closeModal = () => setIsModalOpen(false);
 
+  const sortedDates = Object.keys(scrappedData).sort(
+    (a, b) => new Date(b) - new Date(a)
+  );
+
   return (
-    <div>
-      {Object.keys(scrappedData).map((date) => (
+    <div style={{ marginTop: "100px" }}>
+      <MYPAGETITLE>MYPAGE</MYPAGETITLE>
+      {sortedDates.map((date) => (
         <DateWrapper key={date}>
-          <DateHeading>스크랩한 날짜: {date}</DateHeading>
+          <DateHeading>스크랩 날짜: {date}</DateHeading>
           {scrappedData[date].map((article, index) => (
             <Article
               key={`article_${index}`}
