@@ -210,9 +210,9 @@ const Main2 = () => {
             <SubSummaryName>김태연</SubSummaryName>
             <SummaryRole>
               <SummaryRoleEach>랜딩페이지 구현</SummaryRoleEach>
-              <SummaryRoleEach>시작페이지 구현</SummaryRoleEach>
-              <SummaryRoleEach>검색 결과 창 구현</SummaryRoleEach>
-              <SummaryRoleEach>뉴스 정보 출력창 구현</SummaryRoleEach>
+              <SummaryRoleEach>프로젝트 메인 화면 구현</SummaryRoleEach>
+              <SummaryRoleEach>검색 결과 화면 구현</SummaryRoleEach>
+              <SummaryRoleEach>뉴스 정보 모달창 구현</SummaryRoleEach>
               <SummaryRoleEach>마이페이지 구현</SummaryRoleEach>
             </SummaryRole>
 
