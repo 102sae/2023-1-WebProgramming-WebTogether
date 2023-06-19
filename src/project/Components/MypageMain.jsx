@@ -1,25 +1,27 @@
 import React from "react";
 import Article from "./Article";
-import Modal from './Modal';
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import Modal from "./Modal";
+import { useState, useEffect } from "react";
+import styled from "styled-components";
 
 const DateWrapper = styled.div`
   margin-bottom: 20px;
-  padding-top: 100px; 
+  padding-top: 100px;
 `;
 
 const DateHeading = styled.h1`
   font-weight: bold;
   font-size: 30px;
   margin-bottom: 10px;
-  color:white;
+  color: white;
 `;
 
 function MypageMain({ scrappedData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedContent, setSelectedContent] = useState({});
-  const [selectedContentKey, setSelectedContentKey] = useState('');
+  const [selectedContentKey, setSelectedContentKey] = useState("");
+  const [summary, setSummary] = useState("");
+  const [keyword, setKeyword] = useState([]);
   const closeModal = () => setIsModalOpen(false);
 
   return (
@@ -36,6 +38,8 @@ function MypageMain({ scrappedData }) {
                 setIsModalOpen(true);
                 const contentDict = {};
                 contentDict[article.selectedKey] = article.content;
+                setSummary(article.summary);
+                setKeyword(article.keyword);
                 setSelectedContent(contentDict);
                 setSelectedContentKey(article.selectedKey);
               }}
@@ -49,6 +53,8 @@ function MypageMain({ scrappedData }) {
         closeModal={closeModal}
         content={selectedContent}
         selectedKey={selectedContentKey}
+        scrappedSummary={summary}
+        scrappedKeywords={keyword}
         showScrapButton={false}
       />
     </div>
