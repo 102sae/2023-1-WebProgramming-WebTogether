@@ -18,7 +18,6 @@ const MemberImg = styled.img`
   border-radius: 50%;
   margin-left: 20px;
   margin-right: 20px;
-  background-color: white;
 `;
 
 const MemberInfo = styled.div`
