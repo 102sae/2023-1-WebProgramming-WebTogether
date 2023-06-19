@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import MastheadImg from "../../assets/WEB-TOGETHER.png";
 
 const Main = styled.section`
   height: 660px;
   padding-top: 10px;
-  background-color: #d2d2d2;
+  background-color: #1e1e1e;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +16,7 @@ const Main = styled.section`
 function Masthead() {
   return (
     <Main>
-      <p>동국대학교 웹프로그래밍 팀프로젝트</p>
+      <img src={MastheadImg} alt="" />
     </Main>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import projectImg from "../../assets/projectImg.jpg";
+import projectImg from "../../assets/WEB-TOGETHER.png";
 
 const MainWrapper = styled.div`
   margin-top: 110px;
@@ -143,20 +143,23 @@ const SummaryImg = styled.div`
 const SubSummaryName = styled.div`
   font-size:20px;
   font-weight:bolder;
-  margin-bottom:30px;
+  margin-bottom:10px;
   margin-top:30px;
 `;
 
 const SummaryRole = styled.div`
-  background-color:#313131;
-  width:90%;
-  border-radius:10px;
-  margin-top:-20px;
-  padding:7px 10px;
-  line-height:30px;
-  font-size:17px;
+  width:100%;
+  display:flex;
+  flex-wrap: wrap;
 `;
 
+const SummaryRoleEach = styled.div`
+  background-color:#313131;
+  width:fit-content;
+  padding:10px;
+  border-radius:10px;
+  margin: 0px 5px 10px;
+`
 const ProjectSubTitle = styled.div`
   background-color:#313131;
   width:fit-content;
@@ -198,31 +201,29 @@ const Main2 = () => {
           <SubSummary>
             <SubSummaryName>김정혜</SubSummaryName>
             <SummaryRole>
-              <ul style={{ marginLeft: "-15px" }}>
-                <li>검색 키워드 관련 뉴스 조회 기능 구현</li>
-                <li>검색 결과 로컬 스토리지에 자동 저장 기능 구현</li>
-                <li>검색 기록 바탕으로 검색어 추천 기능 구현</li>
-              </ul>
+              <SummaryRoleEach>검색 키워드 뉴스 조회 기능 구현</SummaryRoleEach>
+              <SummaryRoleEach>검색 결과 로컬 스토리지에 자동 저장 기능 구현</SummaryRoleEach>
+              <SummaryRoleEach>검색어 추천 기능 구현</SummaryRoleEach>
+              <SummaryRoleEach>스크랩 기능 구현</SummaryRoleEach>
             </SummaryRole>
 
             <SubSummaryName>김태연</SubSummaryName>
             <SummaryRole>
-              <ul style={{ marginLeft: "-15px" }}>
-                <li>랜딩페이지 구현</li>
-                <li>시작페이지 구현</li>
-                <li>검색 결과 창 구현</li>
-                <li>뉴스 정보 출력창 구현</li>
-                <li>마이페이지 구현</li>
-              </ul>
+              <SummaryRoleEach>랜딩페이지 구현</SummaryRoleEach>
+              <SummaryRoleEach>시작페이지 구현</SummaryRoleEach>
+              <SummaryRoleEach>검색 결과 창 구현</SummaryRoleEach>
+              <SummaryRoleEach>뉴스 정보 출력창 구현</SummaryRoleEach>
+              <SummaryRoleEach>마이페이지 구현</SummaryRoleEach>
             </SummaryRole>
+
+
 
             <SubSummaryName>안정민</SubSummaryName>
             <SummaryRole>
-              <ul style={{ marginLeft: "-15px" }}>
-                <li>뉴스에 대한 요약문 제공 기능 구현</li>
-                <li>뉴스에 대한 키워드 제공 기능 구현</li>
-                <li>에러 페이지 구현</li>
-              </ul>
+              <SummaryRoleEach>요약문 제공 기능 구현</SummaryRoleEach>
+              <SummaryRoleEach>키워드 제공 기능 구현</SummaryRoleEach>
+              <SummaryRoleEach>에러 페이지 구현</SummaryRoleEach>
+              <SummaryRoleEach>로딩중 기능 구현</SummaryRoleEach>
             </SummaryRole>
           </SubSummary>
         </>
