@@ -6,9 +6,9 @@ import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  top:-5px;
+  left:220px;
+  position:fixed;
 `;
 
 const initialState = {
