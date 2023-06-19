@@ -10,6 +10,7 @@ const NavHeader = styled.div`
   align-items: center;
   position: fixed;
   top: 0;
+  z-index:1;
 `;
 
 const LogoLink = styled.img`

@@ -6,7 +6,7 @@ import Modal from "./Modal";
 
 const News = styled.div`
   width: 72%;
-  margin: 15px auto 0;
+  margin: -40px auto;
 `;
 
 const ArticleCnt = styled.p`
@@ -55,17 +55,7 @@ function SearchingMain({ content }) {
           />
         ))}
       </ArticleList>
-
-      <Page>
-        <div id="prevPageBtn">
-          <i className="fas fa-angle-left"></i>
-        </div>
-        <p id="pagination"></p>
-        <div id="nextPageBtn">
-          <i className="fas fa-angle-right"></i>
-        </div>
-      </Page>
-
+      
       <Modal
         isOpen={isModalOpen}
         closeModal={closeModal}
