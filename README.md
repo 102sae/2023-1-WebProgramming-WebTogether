@@ -65,6 +65,8 @@ npm run preview
 ![0620_동국대모달](https://github.com/junghye01/2023-1-WebProgramming-WebTogether/assets/109332374/15cce204-91b0-46fa-ba3c-2290a25d7d89)
 
 - 요약문, 작성 날짜, 링크, 본문 확인 가능!
+- ChatGPT API 응답 기다리는 동안 '로딩중' 으로 뜸
+![0620_로딩중](https://github.com/junghye01/2023-1-WebProgramming-WebTogether/assets/109332374/8a856647-83fc-4567-914f-e7a319dda385)
 
 ### 5. 스크랩 기능
 ![0620_스크랩2](https://github.com/junghye01/2023-1-WebProgramming-WebTogether/assets/109332374/bc331b72-8fbd-47c3-ac33-63e2d56f632e)
